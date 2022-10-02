@@ -1,0 +1,34 @@
+<!--
+  replies is used to list the replies to a thread. This template is embedded in
+  itself and in thread.tmpl. When a template references itself (see near the 
+  bottom), it can be a recursive template. In this way we can load the reply, 
+  and the child replies recursively.
+-->
+{{define "replies"}}
+  <ul>
+    {{ range $key, $value := . }}
+      <li class="post reply">                                                                                                                                         
+          <div class="postHead postHeadReply">
+            <div class="postHeadChild" id="author_{{$value.ID}}">By: <a class="nameLink" href="/user/{{ $value.Author }}">@{{ $value.Author }}</a></div>
+            <div class="postHeadChild" id="postID_{{$value.ID}}"> on {{ $value.TS }}</div>
+            <div class="foldup" id="foldup_{{$value.ID}}" onclick="fold({{$value.ID}})">[-]</div>
+          </div>
+          <div id="folder_{{ $value.ID }}" class="folder" style="display: block">
+        <a href="/view/?postNum={{ $value.ID  }}">
+          <div class="postBody replyPostBody">{{ $value.Body }}</div>
+        </a>                                                                                                                                                    
+        <div class="postInfo">
+            <div class="showTagInput replyButt"  id="showReplyFormButt_{{$value.ID}}" onclick="showReplyForm({{$value.ID}})">+reply</a>                                                                                                                                                
+          </div>                                                                                                                                                
+          <div id="replyForm_{{$value.ID}}" style="display: none">
+            <textarea class="replyBody" id="replyBody_{{$value.ID}}"></textarea>
+              {{ template "errorDiv" $value }}
+            <div class="genericButt replySubmitButt" onClick="reply({{$value.ID}}, {{$value.Parent}})">reply</div>
+          </div>
+        </div>
+        {{template "replies" $value.Children }}
+        </div>
+      </li> 
+    {{end}}
+  </ul>
+{{end}}

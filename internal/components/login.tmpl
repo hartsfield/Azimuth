@@ -1,0 +1,19 @@
+<!-- 
+  login is the login form used for signing in and signing up. As of version 
+  1.0, there is no password verification when signing up and the only 
+  credentials required is a valid username and password. This component will
+  also display an error for bad passwords/usernames.
+-->
+{{ define "login" }}
+  <form id="loginForm" class="loginForm" method="post" style="display: none">
+    <div class="formDiv post">
+      <input id="username" class="loginInput" name="username" placeholder="username" required maxlength="27" minlength="2"/>
+      <input id="password" class="loginInput passwordInput" name="password" type="password" placeholder="password" required minlength="8" maxlength="27"/>
+      <div id="errorField" class="errorField"></div>
+      <div class="formButts">
+        <div class="loginFormButt signinButt" onClick="auth('signin')">signin</div>
+        <div class="loginFormButt signupButt" onClick="auth('signup')">signup</div>
+      </div>
+    </div>
+  </form>
+{{ end }}

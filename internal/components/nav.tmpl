@@ -1,0 +1,33 @@
+<!-- 
+  nav is used as the navigation menu for TagMachine. It allows for Signin, Show
+  all threads, post a thread, and sort by tag. The post button should only be 
+  visible when a user is logged in.
+-->
+{{ define "nav" }}
+  <div class="mainNav" id="mainNav">                                                
+    <ul>                                                               
+        <li class="logoButt genericButt" onClick="goHome()"># TagMachine</li>               
+      {{ if .UserData.IsLoggedIn }}
+        <li class="loginButt genericButt" onClick="window.location = window.location.origin + '/user/{{ .UserData.Name }}'">@{{ .UserData.Name }}</li>
+      {{ else }}
+        <li class="loginButt genericButt" onClick="showLogin()">LOGIN</li>
+      {{ end }}
+      {{ template "endNav" . }}
+      {{ if or (eq .PageName "thread") (eq .PageName "user") (eq .PageName "rules") }}
+      {{ else }}
+              {{ if .UserData.IsLoggedIn }}
+                <li class="newPostButt genericButt" onClick="showPostForm()">POST</li>               
+              {{ end }}
+
+              {{ range $key, $tag := .DefaultTags }}
+                <li id="tag_{{ $tag }}" class="defaultTagButt genericButt" onClick="setTag({{ $tag }})">#{{ $tag }}</li>
+              {{ end }}
+
+              {{ range $key, $tag := .Tags }}
+                <li id="tag_{{ $tag }}" class="trending tagButt genericButt"  style="display: none" onClick="setTag({{ $tag }})">#{{ $tag }}</li>
+              {{ end }}
+              <li class="showTrending genericButt" id="showTags" onClick="showTrending()" >trends ➡</li>  
+      {{ end }}
+    </ul>                                                              
+  </div>                                                               
+{{ end }}

@@ -1,0 +1,15 @@
+<!-- 
+  user.tmpl is used to display a users posts
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+{{template "head"}}                                    
+  <body>
+    {{ template "nav" . }}
+    {{ template "login" . }}
+    {{ template "profileName" . }}
+    {{ template "frontpagePosts" . }}
+    {{ template "footer" . }}
+    {{ template "colortags" }}
+  </body>
+</html>

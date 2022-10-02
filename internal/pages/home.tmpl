@@ -1,0 +1,32 @@
+<!--
+  home.tmpl is the home page of tagmachine. When a user navigates to 
+  tagmachine.com, they should see this page.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+{{template "head"}}                                    
+  <body>
+    {{ template "nav" . }}
+    {{ template "login" . }}
+    {{ if .UserData.IsLoggedIn }}
+      {{template "postForm" . }}
+    {{ end }}
+    {{ template "frontpagePosts" . }}
+    {{ template "footer" . }}
+    {{ template "colortags" . }}
+    <script>
+      var observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+              if (entry.intersectionRatio > 0 ) {
+                  nextPage(({{ .PageNumber }}).toString(), {{ .PageName }});
+                  observer.unobserve(document.querySelector('#loadScroll'))
+              } 
+          })
+       });
+
+       observer.observe(document.querySelector('#loadScroll'));
+    </script>
+
+
+  </body>
+</html>

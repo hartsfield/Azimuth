@@ -1,0 +1,37 @@
+<!-- 
+  frontpagePosts are the posts on the front page. We range over them and 
+  display them with tags and information about who posted them and when.
+-->
+{{ define "frontpagePosts" }}
+  <div id="posts">                                                                                                                                                
+    <ul>                                                                                                                                                          
+      {{ range $key, $value := .Posts}}                                                                                                                        
+        <li class="post">                                                                                                                                         
+            <div class="postHead">
+              <div class="postHeadChild" id="author_{{$value.ID}}">By: <a class="nameLink" href="/user/{{ $value.Author }}">@{{ $value.Author }}</a></div>
+              <div class="postHeadChild" id="postID_{{$value.ID}}"> on {{ $value.TS }}</div>
+            </div>
+          <a href="/view/?postNum={{ $value.ID  }}">
+            <div class="postBody postTitle">{{ $value.Title }}</div>
+            <div class="postBody">{{ $value.Body }}</div>
+          </a>                                                                                                                                                    
+          <div class="postInfo">
+            <!-- TODO: Add tagger -->
+            {{ range $k, $t := $value.Tags }}
+                    <div class="showTagInput threadTags threadTag_{{$t}}" id="threadTag_{{$value.ID}}_{{$t}}" >#{{$t}}</div>
+            {{ end }}
+            <div class="showTagInput replyButt" onclick="showReplyForm({{$value.ID}})">
+              <div id="showReplyFormButt_{{$value.ID}}">+REPLY</div> 
+            </div>                                                                                                                                                
+            <div id="replyForm_{{$value.ID}}" style="display: none">
+              <textarea class="replyBody" id="replyBody_{{$value.ID}}"></textarea>
+              {{ template "errorDiv" $value }}
+              <div class="genericButt replySubmitButt" onClick="reply({{$value.ID}}, {{$value.Parent}})">reply</div>
+            </div>
+          </div>
+        </li>                                                                                                                                                     
+      {{ end }}                                                                                                                                                   
+    </ul>                                                                                                                                                         
+  </div>                                                                                                                                                  
+ 
+{{ end }}

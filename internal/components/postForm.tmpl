@@ -1,0 +1,11 @@
+<!-- 
+  postForm is the form used to make a new post/thread
+-->
+{{ define "postForm" }}
+  <form id="newPostForm" class="newPostForm" method="post" style="display: none">
+    <input class="titleInput" id="postTitle" name="title" placeholder="Title" required minlength="2" maxlength="50"/>
+    <textarea id="postBody" class="postBodyTextArea" name="postBody" placeholder="Content" required minlength="8" maxlength="2500"></textarea>
+    <input id="taginput" class="titleInput tagInput" name="tags" placeholder="#TAGS" required minlength="5" maxlength="50"/>
+    <div class="postButt" id="postButt" onClick="postThread()">Post</div>
+  </form>
+{{ end }}
